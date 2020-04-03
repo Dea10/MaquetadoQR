@@ -1,0 +1,2 @@
+rootProject.name='MaquetadoQR'
+include ':app'
