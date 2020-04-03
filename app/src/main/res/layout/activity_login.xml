@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#FF5722"
+        android:onClick="goToScannerActivity"
         android:text="Iniciar sesión"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/editText3"
