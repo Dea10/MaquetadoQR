@@ -2,13 +2,12 @@ package com.example.maquetadoqr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,13 +21,13 @@ public class ScannerActivity extends AppCompatActivity {
     public ImageView iv_anim;
     public TextView tv_name;
     public TextView tv_counter;
+    public Button test;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
-        getSupportActionBar().hide();
         bindUI();
 
         iv_anim.setBackgroundResource(R.drawable.scanner_animation);
@@ -60,11 +59,21 @@ public class ScannerActivity extends AppCompatActivity {
         iv_anim = findViewById(R.id.scanner_iv_anim);
         tv_name = findViewById(R.id.scanner_tv_name);
         tv_counter = findViewById(R.id.scanner_tv_counter);
+        test = findViewById(R.id.button);
     }
 
     public void setView() {
         String company_logo = "https://rcontrol.com.mx/wp-content/uploads/2016/03/LOGO-RC-OK.png";
         Picasso.get().load(company_logo).into(iv_logo);
+    }
+
+    public void goToJourneyDetailActivity(View view) {
+        Intent intent = new Intent(this, JourneyDetailActivity.class);
+        startActivity(intent);
+    }
+
+    public void test(View view) {
+
     }
 
     public CountDownTimer cdt = new CountDownTimer(30000, 1000) {
