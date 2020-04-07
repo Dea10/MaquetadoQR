@@ -23,6 +23,8 @@ public class ScannerActivity extends AppCompatActivity {
     public TextView tv_counter;
     public Button test;
 
+    public Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +70,18 @@ public class ScannerActivity extends AppCompatActivity {
     }
 
     public void goToJourneyDetailActivity(View view) {
-        Intent intent = new Intent(this, JourneyDetailActivity.class);
+        intent = new Intent(this, JourneyDetailActivity.class);
         startActivity(intent);
     }
 
-    public void test(View view) {
+    public void goToAssignActivity(View view) {
+        intent = new Intent(this, AssignActivity.class);
+        startActivity(intent);
+    }
 
+    public void goToAlertActivity(View view) {
+        intent = new Intent(this, AlertActivity.class);
+        startActivity(intent);
     }
 
     public CountDownTimer cdt = new CountDownTimer(30000, 1000) {
