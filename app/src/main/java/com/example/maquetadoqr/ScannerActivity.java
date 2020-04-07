@@ -1,17 +1,38 @@
 package com.example.maquetadoqr;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.maquetadoqr.Config.Constants;
+import com.example.maquetadoqr.Database.AppDatabase;
+import com.example.maquetadoqr.Entities.EventConfiguration;
+import com.example.maquetadoqr.Volley.VolleySingleton;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ScannerActivity extends AppCompatActivity {
 
@@ -24,7 +45,7 @@ public class ScannerActivity extends AppCompatActivity {
     public Button test;
 
     public Intent intent;
-
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +55,9 @@ public class ScannerActivity extends AppCompatActivity {
 
         iv_anim.setBackgroundResource(R.drawable.scanner_animation);
         scanner_animation = (AnimationDrawable) iv_anim.getBackground();
+        //Instanciar la base de datos
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, Constants.DB_NAME).allowMainThreadQueries().build();
+        loadResources();
     }
 
     @Override
@@ -94,4 +118,63 @@ public class ScannerActivity extends AppCompatActivity {
             this.start();
         }
     };
+
+    private void loadResources() {
+        String url = getResources().getString(R.string.base_url)+"japi/get_feature_configuration_by_user_and_category/";
+
+
+        StringRequest jsonObjRequest = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                EventConfiguration eventConfiguration = new EventConfiguration( jsonObject.getInt("feature_id"),
+                                        jsonObject.getString("feature_key"),
+                                        jsonObject.getInt("order"),
+                                        jsonObject.getString("resource_name"),
+                                        jsonObject.getBoolean("isauthorized"),
+                                        jsonObject.getString("feature_configuration"));
+                                //Inserta los features recibidos
+                                db.eventConfigurationDAO().insertConfiguration(eventConfiguration);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("Errorl",error.toString());
+                    }
+                }) {
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", "9f7bfb0a-715d-4bd3-834b-d5b649f386e3");
+                params.put("parameters", "{\"feature_category_key\":\"REGISTER\"}");
+                return params;
+            }
+
+        };
+        VolleySingleton.getmInstance(getApplicationContext()).addToRequestQueue(jsonObjRequest);
+
+
+    }
 }
