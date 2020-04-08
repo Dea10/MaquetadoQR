@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.maquetadoqr.R;
+import com.squareup.picasso.Picasso;
 
 public class JourneyDetailActivity extends AppCompatActivity {
 
@@ -17,10 +18,20 @@ public class JourneyDetailActivity extends AppCompatActivity {
     public Button buttonSend;
     public Button buttonCancel;
 
+    public String urlImg = "https://png.pngtree.com/png-clipart/20190924/original/pngtree-businessman-user-avatar-free-vector-png-image_4827807.jpg";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journey_detail);
+
+        bindUI();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Picasso.get().load(urlImg).into(imageViewAvatar);
     }
 
     public void bindUI() {
@@ -45,3 +56,5 @@ public class JourneyDetailActivity extends AppCompatActivity {
 }
 
 // TODO: Avatar img - Picasso
+// TODO: Send buttons
+// TODO: Cancel buttons
