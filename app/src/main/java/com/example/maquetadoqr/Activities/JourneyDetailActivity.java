@@ -45,4 +45,3 @@ public class JourneyDetailActivity extends AppCompatActivity {
 }
 
 // TODO: Avatar img - Picasso
-// TODO: Table grid

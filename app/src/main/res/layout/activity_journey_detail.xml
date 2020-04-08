@@ -25,54 +25,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scanner_iv_header" />
 
-    <EditText
-        android:id="@+id/assignEditTextCredential"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Cajas"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
     <Button
         android:id="@+id/journeyButtonChecklist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="#FF5722"
         android:text="Checklist"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/assignEditTextTransLine"
-        app:layout_constraintTop_toBottomOf="@+id/assignEditTextTransLine" />
-
-    <EditText
-        android:id="@+id/assignEditTextTransLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Sello 1"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/assignEditTextFullName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/assignEditTextFullName"
-        app:layout_constraintTop_toBottomOf="@+id/assignEditTextFullName" />
-
-    <EditText
-        android:id="@+id/assignEditTextFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Tarimas"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/assignEditTextCredential"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/assignEditTextCredential"
-        app:layout_constraintTop_toBottomOf="@+id/assignEditTextCredential" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <Button
         android:id="@+id/journeyButtonSend"
@@ -130,5 +93,62 @@
         android:text="Button"
         app:layout_constraintBottom_toTopOf="@+id/journeyButtonSend"
         app:layout_constraintStart_toStartOf="@+id/journeyButtonSend" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:stretchColumns="1">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView android:text="Evento a registrar:" />
+            <TextView
+                android:text="Entrada"
+                android:gravity="right" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TextView android:text="Viaje:" />
+            <TextView
+                android:text="P01234"
+                android:gravity="right" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TextView android:text="Operador:" />
+            <TextView android:text="Luis Sánchez"
+                android:gravity="right" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TextView android:text="Línea transportista:" />
+            <TextView
+                android:text="TUM"
+                android:gravity="right" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TextView android:text="Cita de carga:" />
+            <TextView
+                android:text="20-03-05 12:00"
+                android:gravity="right" />
+        </TableRow>
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
