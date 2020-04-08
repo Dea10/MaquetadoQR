@@ -7,31 +7,31 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 public class VolleySingleton {
-    private static VolleySingleton mInstance;
-    private RequestQueue mRequestQueue;
-    private static Context contexto;
+    private static VolleySingleton instance;
+    private RequestQueue requestQueue;
+    private static Context ctx;
 
-    private VolleySingleton(Context contex) {
-        contexto = contex;
-        mRequestQueue = getRequestQueue();
+    private VolleySingleton(Context ctx) {
+        this.ctx = ctx;
+        requestQueue = getRequestQueue();
     }
 
     private RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(contexto.getApplicationContext());
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
         }
-        return mRequestQueue;
+        return requestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> request) {
         getRequestQueue().add(request);
     }
 
-    public static synchronized VolleySingleton getmInstance(Context context) {
-        if(mInstance == null){
-            mInstance = new VolleySingleton(context);
+    public static synchronized VolleySingleton getInstance(Context context) {
+        if(instance == null){
+            instance = new VolleySingleton(context);
         }
-        return mInstance;
+        return instance;
     }
 
 }

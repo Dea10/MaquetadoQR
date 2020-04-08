@@ -1,4 +1,4 @@
-package com.example.maquetadoqr;
+package com.example.maquetadoqr.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.maquetadoqr.R;
 import com.squareup.picasso.Picasso;
 
 public class ScannerActivity extends AppCompatActivity {
@@ -61,7 +62,7 @@ public class ScannerActivity extends AppCompatActivity {
         iv_anim = findViewById(R.id.scanner_iv_anim);
         tv_name = findViewById(R.id.scanner_tv_name);
         tv_counter = findViewById(R.id.scanner_tv_counter);
-        test = findViewById(R.id.button);
+        test = findViewById(R.id.journeyButtonChecklist);
     }
 
     public void setView() {

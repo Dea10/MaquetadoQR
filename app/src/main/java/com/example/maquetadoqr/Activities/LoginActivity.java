@@ -1,6 +1,5 @@
-package com.example.maquetadoqr;
+package com.example.maquetadoqr.Activities;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.maquetadoqr.R;
 import com.example.maquetadoqr.Volley.VolleySingleton;
 
 import org.json.JSONArray;
@@ -131,6 +131,6 @@ public class LoginActivity extends AppCompatActivity {
         // Add the request to the RequestQueue.
         // queue.add(stringRequest);
 
-        volleySingleton.getmInstance(this).addToRequestQueue(stringRequest);
+        volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 }
