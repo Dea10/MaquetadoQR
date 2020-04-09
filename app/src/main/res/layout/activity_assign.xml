@@ -7,7 +7,7 @@
     tools:context=".Activities.AssignActivity">
 
     <ImageView
-        android:id="@+id/scanner_iv_header"
+        android:id="@+id/assginImageViewHeader"
         android:layout_width="412dp"
         android:layout_height="64dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         android:text="Credencial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_iv_header" />
+        app:layout_constraintTop_toBottomOf="@+id/assginImageViewHeader" />
 
     <EditText
         android:id="@+id/assignEditTextCredential"
@@ -63,28 +63,28 @@
         app:layout_constraintTop_toBottomOf="@+id/assignEditTextFullName" />
 
     <Button
-        android:id="@+id/journeyButtonSend"
+        android:id="@+id/assignButtonSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="#FF5722"
+        android:onClick="goToJourneyDetailActivity"
         android:text="Confirmar"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF5722"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/assignButtonCancel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/journeyButtonCancel"
+        android:id="@+id/assignButtonCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="#FF5722"
+        android:onClick="buttonCancelFunction"
         android:text="Cancelar"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF5722"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

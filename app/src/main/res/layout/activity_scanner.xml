@@ -7,7 +7,7 @@
     tools:context=".Activities.ScannerActivity">
 
     <ImageView
-        android:id="@+id/scanner_iv_header"
+        android:id="@+id/scannerImageViewHeader"
         android:layout_width="415dp"
         android:layout_height="64dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/header" />
 
     <ImageView
-        android:id="@+id/scanner_iv_logo"
+        android:id="@+id/scannerImageViewLogo"
         android:layout_width="wrap_content"
         android:layout_height="75dp"
         android:layout_marginStart="16dp"
@@ -24,10 +24,10 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_iv_header" />
+        app:layout_constraintTop_toBottomOf="@+id/scannerImageViewHeader" />
 
     <TextView
-        android:id="@+id/scanner_tv_name"
+        android:id="@+id/scannerTextViewCompanyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -37,10 +37,10 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_iv_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/scannerImageViewLogo" />
 
     <ImageView
-        android:id="@+id/scanner_iv_anim"
+        android:id="@+id/scannerImageViewAnimation"
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:layout_marginStart="16dp"
@@ -48,10 +48,10 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_tv_name" />
+        app:layout_constraintTop_toBottomOf="@+id/scannerTextViewCompanyName" />
 
     <TextView
-        android:id="@+id/scanner_tv_counter"
+        android:id="@+id/scannerTextViewCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -61,22 +61,23 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_iv_anim" />
+        app:layout_constraintTop_toBottomOf="@+id/scannerImageViewAnimation" />
 
     <Button
-        android:id="@+id/scanner_btn_logout"
+        android:id="@+id/scannerButtonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:backgroundTint="#FF5722"
+        android:onClick="logout"
         android:text="Cerrar sesión"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/buttonJourneyDetail"
-        app:layout_constraintStart_toStartOf="@+id/buttonAssign"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAssign" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonJourneyDetailActivity"
+        app:layout_constraintStart_toStartOf="@+id/buttonAssignActivity"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAssignActivity" />
 
     <Button
-        android:id="@+id/buttonJourneyDetail"
+        android:id="@+id/buttonJourneyDetailActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -84,31 +85,31 @@
         android:text="JD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonAlert"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_tv_counter" />
+        app:layout_constraintStart_toEndOf="@+id/buttonAlertActivity"
+        app:layout_constraintTop_toBottomOf="@+id/scannerTextViewCounter" />
 
     <Button
-        android:id="@+id/buttonAssign"
+        android:id="@+id/buttonAssignActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:onClick="goToAssignActivity"
         android:text="Assign"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAlert"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAlertActivity"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_tv_counter" />
+        app:layout_constraintTop_toBottomOf="@+id/scannerTextViewCounter" />
 
     <Button
-        android:id="@+id/buttonAlert"
+        android:id="@+id/buttonAlertActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:onClick="goToAlertActivity"
         android:text="Alert"
-        app:layout_constraintEnd_toStartOf="@+id/buttonJourneyDetail"
+        app:layout_constraintEnd_toStartOf="@+id/buttonJourneyDetailActivity"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonAssign"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_tv_counter" />
+        app:layout_constraintStart_toEndOf="@+id/buttonAssignActivity"
+        app:layout_constraintTop_toBottomOf="@+id/scannerTextViewCounter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

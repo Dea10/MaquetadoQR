@@ -7,7 +7,7 @@
     tools:context=".Activities.JourneyDetailActivity">
 
     <ImageView
-        android:id="@+id/scanner_iv_header"
+        android:id="@+id/journeyImageViewHeader"
         android:layout_width="412dp"
         android:layout_height="64dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,26 +16,14 @@
         app:srcCompat="@drawable/header" />
 
     <TextView
-        android:id="@+id/assignTextViewCredential"
+        android:id="@+id/journeyTextViewProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Progress bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_iv_header" />
-
-    <Button
-        android:id="@+id/journeyButtonChecklist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#FF5722"
-        android:text="Checklist"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/journeyImageViewHeader" />
 
     <Button
         android:id="@+id/journeyButtonSend"
@@ -70,10 +58,9 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/assignTextViewCredential"
-        app:layout_constraintStart_toStartOf="@+id/assignTextViewCredential"
-        app:layout_constraintTop_toBottomOf="@+id/assignTextViewCredential"
-        tools:srcCompat="@drawable/user" />
+        app:layout_constraintEnd_toEndOf="@+id/journeyTextViewProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/journeyTextViewProgressBar"
+        app:layout_constraintTop_toBottomOf="@+id/journeyTextViewProgressBar" />
 
     <TextView
         android:id="@+id/textView2"
@@ -84,15 +71,6 @@
         app:layout_constraintEnd_toEndOf="@+id/journeyImageViewAvatar"
         app:layout_constraintStart_toStartOf="@+id/journeyImageViewAvatar"
         app:layout_constraintTop_toBottomOf="@+id/journeyImageViewAvatar" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/journeyButtonSend"
-        app:layout_constraintStart_toStartOf="@+id/journeyButtonSend" />
 
     <TableLayout
         android:id="@+id/tableLayout"

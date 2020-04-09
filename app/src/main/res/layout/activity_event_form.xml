@@ -7,7 +7,7 @@
     tools:context=".Activities.EventFormActivity">
 
     <ImageView
-        android:id="@+id/scanner_iv_header"
+        android:id="@+id/eventFormImageViewHeader"
         android:layout_width="412dp"
         android:layout_height="64dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,88 +16,91 @@
         app:srcCompat="@drawable/header" />
 
     <TextView
-        android:id="@+id/assignTextViewCredential"
+        android:id="@+id/eventFormTextViewCredential"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Evento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanner_iv_header" />
+        app:layout_constraintTop_toBottomOf="@+id/eventFormImageViewHeader" />
 
     <EditText
-        android:id="@+id/assignEditTextCredential"
+        android:id="@+id/eventFormEditTextCredential"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Cajas"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/assignTextViewCredential"
-        app:layout_constraintStart_toStartOf="@+id/assignTextViewCredential"
-        app:layout_constraintTop_toBottomOf="@+id/assignTextViewCredential" />
+        app:layout_constraintEnd_toEndOf="@+id/eventFormTextViewCredential"
+        app:layout_constraintStart_toStartOf="@+id/eventFormTextViewCredential"
+        app:layout_constraintTop_toBottomOf="@+id/eventFormTextViewCredential" />
 
     <EditText
-        android:id="@+id/assignEditTextFullName"
+        android:id="@+id/eventFormEditTextFullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Tarimas"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/assignEditTextCredential"
-        app:layout_constraintStart_toStartOf="@+id/assignEditTextCredential"
-        app:layout_constraintTop_toBottomOf="@+id/assignEditTextCredential" />
+        app:layout_constraintEnd_toEndOf="@+id/eventFormEditTextCredential"
+        app:layout_constraintStart_toStartOf="@+id/eventFormEditTextCredential"
+        app:layout_constraintTop_toBottomOf="@+id/eventFormEditTextCredential" />
 
     <EditText
-        android:id="@+id/assignEditTextTransLine"
+        android:id="@+id/eventFormEditTextTransLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Sello 1"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/assignEditTextFullName"
-        app:layout_constraintStart_toStartOf="@+id/assignEditTextFullName"
-        app:layout_constraintTop_toBottomOf="@+id/assignEditTextFullName" />
+        app:layout_constraintEnd_toEndOf="@+id/eventFormEditTextFullName"
+        app:layout_constraintStart_toStartOf="@+id/eventFormEditTextFullName"
+        app:layout_constraintTop_toBottomOf="@+id/eventFormEditTextFullName" />
 
     <Button
-        android:id="@+id/journeyButtonChecklist"
+        android:id="@+id/eventFormButtonChecklist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:backgroundTint="#FF5722"
+        android:onClick="goToChecklistActivity"
         android:text="Checklist"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF5722"
-        app:layout_constraintStart_toStartOf="@+id/assignEditTextTransLine"
-        app:layout_constraintTop_toBottomOf="@+id/assignEditTextTransLine" />
+        app:layout_constraintStart_toStartOf="@+id/eventFormEditTextTransLine"
+        app:layout_constraintTop_toBottomOf="@+id/eventFormEditTextTransLine" />
 
     <Button
-        android:id="@+id/journeyButtonSend"
+        android:id="@+id/eventFormButtonSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="#FF5722"
+        android:onClick="goToAlertActivity"
         android:text="Confirmar"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF5722"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/assignButtonCancel"
+        app:layout_constraintEnd_toStartOf="@+id/eventFormButtonCancel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/journeyButtonCancel"
+        android:id="@+id/eventFormButtonCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="#FF5722"
+        android:onClick="buttonCancelFunction"
         android:text="Cancelar"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF5722"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/assignButtonSend" />
+        app:layout_constraintStart_toEndOf="@+id/eventFormButtonSend" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

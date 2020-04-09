@@ -36,7 +36,6 @@ public class JourneyDetailActivity extends AppCompatActivity {
 
     public void bindUI() {
         imageViewAvatar = findViewById(R.id.journeyImageViewAvatar);
-        buttonChecklist = findViewById(R.id.journeyButtonChecklist);
         buttonSend = findViewById(R.id.journeyButtonSend);
         buttonCancel = findViewById(R.id.journeyButtonCancel);
     }
@@ -45,16 +44,11 @@ public class JourneyDetailActivity extends AppCompatActivity {
         finish();
     }
 
-    public void buttonChecklistFunction() {
-
-    }
-
     public void goToEventFormActivity(View view) {
         Intent intent = new Intent(this, EventFormActivity.class);
         startActivity(intent);
     }
 }
 
-// TODO: Avatar img - Picasso
 // TODO: Send buttons
 // TODO: Cancel buttons

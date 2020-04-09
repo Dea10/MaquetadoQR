@@ -7,7 +7,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,13 +15,14 @@ import com.squareup.picasso.Picasso;
 
 public class ScannerActivity extends AppCompatActivity {
 
-    public AnimationDrawable scanner_animation;
-    public ImageView iv_header;
-    public ImageView iv_logo;
-    public ImageView iv_anim;
-    public TextView tv_name;
-    public TextView tv_counter;
-    public Button test;
+    public AnimationDrawable scannerAnimation;
+    public ImageView imageViewHeader;
+    public ImageView imageViewLogo;
+    public ImageView imageViewAnimation;
+    public TextView textViewCompanyName;
+    public TextView textViewCounter;
+
+    public static final String EXTRA_SCANNER_ACTIVITY = "EXTRA_SCANNER_ACTIVITY";
 
     public Intent intent;
 
@@ -33,8 +33,8 @@ public class ScannerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scanner);
         bindUI();
 
-        iv_anim.setBackgroundResource(R.drawable.scanner_animation);
-        scanner_animation = (AnimationDrawable) iv_anim.getBackground();
+        imageViewAnimation.setBackgroundResource(R.drawable.scanner_animation);
+        scannerAnimation = (AnimationDrawable) imageViewAnimation.getBackground();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ScannerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        scanner_animation.start();
+        scannerAnimation.start();
         cdt.start();
     }
 
@@ -57,17 +57,16 @@ public class ScannerActivity extends AppCompatActivity {
     }
 
     public void bindUI() {
-        iv_header = findViewById(R.id.scanner_iv_header);
-        iv_logo = findViewById(R.id.scanner_iv_logo);
-        iv_anim = findViewById(R.id.scanner_iv_anim);
-        tv_name = findViewById(R.id.scanner_tv_name);
-        tv_counter = findViewById(R.id.scanner_tv_counter);
-        test = findViewById(R.id.journeyButtonChecklist);
+        imageViewHeader = findViewById(R.id.scannerImageViewHeader);
+        imageViewLogo = findViewById(R.id.scannerImageViewLogo);
+        imageViewAnimation = findViewById(R.id.scannerImageViewAnimation);
+        textViewCompanyName = findViewById(R.id.scannerTextViewCompanyName);
+        textViewCounter = findViewById(R.id.scannerTextViewCounter);
     }
 
     public void setView() {
         String company_logo = "https://rcontrol.com.mx/wp-content/uploads/2016/03/LOGO-RC-OK.png";
-        Picasso.get().load(company_logo).into(iv_logo);
+        Picasso.get().load(company_logo).into(imageViewLogo);
     }
 
     public void goToJourneyDetailActivity(View view) {
@@ -82,16 +81,22 @@ public class ScannerActivity extends AppCompatActivity {
 
     public void goToAlertActivity(View view) {
         intent = new Intent(this, AlertActivity.class);
+        intent.putExtra(EXTRA_SCANNER_ACTIVITY, true);
+        startActivity(intent);
+    }
+
+    public void logout(View view) {
+        intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
     public CountDownTimer cdt = new CountDownTimer(30000, 1000) {
         public void onTick(long millisUntilFinished) {
-            tv_counter.setText("El scanner se reiniciará en: " + millisUntilFinished / 1000 + " segundos");
+            textViewCounter.setText("El scanner se reiniciará en: " + millisUntilFinished / 1000 + " segundos");
         }
 
         public void onFinish() {
-            tv_counter.setText("El scanner se está reiniciando ...");
+            textViewCounter.setText("El scanner se está reiniciando ...");
             this.start();
         }
     };
