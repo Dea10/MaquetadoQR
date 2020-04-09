@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="test_array">
+        <item>opt 00</item>
+        <item>opt 01</item>
+        <item>opt 02</item>
+        <item>opt 04</item>
+    </string-array>
+</resources>

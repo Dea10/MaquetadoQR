@@ -43,6 +43,7 @@ public class EventFormActivity extends AppCompatActivity {
     }
 
     public void goToChecklistActivity(View view) {
-
+        Intent intent = new Intent(this, ChecklistActivity.class);
+        startActivity(intent);
     }
 }
