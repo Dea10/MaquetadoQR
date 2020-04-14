@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
     public String user;
     public String password;
     public String token;
+    public String userId;
+    public String roleFlow;
+    public String userName;
+    public String companyName;
+
     public static final String TAG = LoginActivity.class.getName();
 
     public View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -77,24 +83,35 @@ public class LoginActivity extends AppCompatActivity {
         password = editTextPassword.getText().toString();
 
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://www.rcontrol.com.mx/RpcUser/get_token_by_user";
+        // RequestQueue queue = Volley.newRequestQueue(this);
+        // String url ="https://www.rcontrol.com.mx/RpcUser/get_token_by_user";
 
+        String loginUrl = "http://11994.qa.rcontrol.com.mx/user/LoginQR";
+        String resourcesUrl = "http://11994.qa.rcontrol.com.mx/japi/get_feature_configuration_by_user_and_category";
+
+        loginRequest(loginUrl);
+        configRequest(resourcesUrl);
+
+        //TODO: Mandar data a DB
+    }
+
+    private void configRequest(String resourcesUrl) {
         // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, resourcesUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray array = jsonObject.getJSONArray("data");
-                            token = array.getJSONArray(0).get(0).toString();
+                            JSONArray jsonArray = new JSONArray(response);
+                            //JSONObject jsonObject = new JSONObject(response);
+                            //JSONArray array = jsonObject.getJSONArray("data");
+                            ArrayList<JSONObject> jsonObjectArrayList = new ArrayList<>();
 
-                            goToScannerActivity(user, password, token);
+                            // TODO: Recibir JSON y extraer data
+
                         }catch (JSONException err){
                             // Handle JSONException
-                            textViewFeedback.setTextColor(Color.RED);
-                            textViewFeedback.setText("Usuario o Contraseña inconrrecta!");
+
                             Log.e(TAG, err.getMessage());
                         }
                     }
@@ -102,7 +119,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 textViewFeedback.setTextColor(Color.RED);
-                textViewFeedback.setText("Server Error");
+                textViewFeedback.setText("ConfigRequest: Server Error");
+                Log.e(TAG, error.getMessage());
             }
         }){
             @Override
@@ -121,8 +139,8 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 //Adding the parameters to the request
-                params.put("user", user);
-                params.put("password", password);
+                params.put("token", "a0c272f8-6016-4e2b-a515-7e03ed200c56");
+                params.put("parameters", "{\"feature_category_key\":[\"REGISTER\",\"QRTERMINAL\"]}");
 
                 return params;
             }
@@ -133,4 +151,72 @@ public class LoginActivity extends AppCompatActivity {
 
         volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
+
+    public void loginRequest(String loginUrl) {
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            //JSONArray array = jsonObject.getJSONArray("data");
+
+                            //token = array.getJSONArray(0).get(0).toString();
+
+                            // TODO: Recibir JSON y extraer data
+
+                            token = jsonObject.getString("token");
+                            userId = jsonObject.getString("user_id");
+                            roleFlow = jsonObject.getString("role_flow");
+                            userName = jsonObject.getString("user_name");
+                            companyName = jsonObject.getString("company_name");
+
+                            // TODO: Mandar data a DB
+
+                            // goToScannerActivity(user, password, token);
+                        }catch (JSONException err){
+                            // Handle JSONException
+                            textViewFeedback.setTextColor(Color.RED);
+                            textViewFeedback.setText("Usuario o Contraseña inconrrecta!");
+                            Log.e(TAG, err.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                textViewFeedback.setTextColor(Color.RED);
+                textViewFeedback.setText("LoginRequest: Server Error");
+                Log.e(TAG, error.getMessage());
+            }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                //Adding the parameters to the request
+                params.put("user", "admin_qa_rc");
+                params.put("password", "Password135$$");
+
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        // queue.add(stringRequest);
+
+        volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
 }
