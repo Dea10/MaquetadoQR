@@ -1,6 +1,7 @@
 package com.example.maquetadoqr.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,12 +14,12 @@ import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.maquetadoqr.POJOs.POJOUserLogin;
 import com.example.maquetadoqr.R;
+import com.example.maquetadoqr.UserLoginViewModel;
 import com.example.maquetadoqr.Volley.VolleySingleton;
 
 import org.json.JSONArray;
@@ -32,6 +33,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     public VolleySingleton volleySingleton;
+    public UserLoginViewModel userLoginViewModel;
 
     public TextView textViewFeedback;
     public EditText editTextUser;
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     public String user;
     public String password;
     public String token;
-    public String userId;
+    public Integer userId;
     public String roleFlow;
     public String userName;
     public String companyName;
@@ -59,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        userLoginViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(UserLoginViewModel.class);
 
         bindUI();
     }
@@ -78,13 +82,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-
         user = editTextUser.getText().toString();
         password = editTextPassword.getText().toString();
-
-        // Instantiate the RequestQueue.
-        // RequestQueue queue = Volley.newRequestQueue(this);
-        // String url ="https://www.rcontrol.com.mx/RpcUser/get_token_by_user";
 
         String loginUrl = "http://11994.qa.rcontrol.com.mx/user/LoginQR";
         String resourcesUrl = "http://11994.qa.rcontrol.com.mx/japi/get_feature_configuration_by_user_and_category";
@@ -96,22 +95,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void configRequest(String resourcesUrl) {
-        // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, resourcesUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
-                            //JSONObject jsonObject = new JSONObject(response);
-                            //JSONArray array = jsonObject.getJSONArray("data");
                             ArrayList<JSONObject> jsonObjectArrayList = new ArrayList<>();
 
                             // TODO: Recibir JSON y extraer data
-
                         }catch (JSONException err){
-                            // Handle JSONException
-
                             Log.e(TAG, err.getMessage());
                         }
                     }
@@ -146,33 +139,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        // Add the request to the RequestQueue.
-        // queue.add(stringRequest);
-
         volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
+    //TODO: Separa lógica de login, mandar petición a DB a repositorio
     public void loginRequest(String loginUrl) {
-        // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            //JSONArray array = jsonObject.getJSONArray("data");
-
-                            //token = array.getJSONArray(0).get(0).toString();
-
                             // TODO: Recibir JSON y extraer data
 
                             token = jsonObject.getString("token");
-                            userId = jsonObject.getString("user_id");
+                            userId = jsonObject.getInt("user_id");
                             roleFlow = jsonObject.getString("role_flow");
                             userName = jsonObject.getString("user_name");
                             companyName = jsonObject.getString("company_name");
 
                             // TODO: Mandar data a DB
+
+                            userLoginViewModel.insert(new POJOUserLogin(token, userId, roleFlow, userName, companyName));
 
                             // goToScannerActivity(user, password, token);
                         }catch (JSONException err){
@@ -212,9 +200,6 @@ public class LoginActivity extends AppCompatActivity {
                 return params;
             }
         };
-
-        // Add the request to the RequestQueue.
-        // queue.add(stringRequest);
 
         volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
