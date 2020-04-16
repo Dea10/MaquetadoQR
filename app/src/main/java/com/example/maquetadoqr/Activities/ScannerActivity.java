@@ -22,6 +22,8 @@ public class ScannerActivity extends AppCompatActivity {
     public TextView textViewCompanyName;
     public TextView textViewCounter;
 
+    private String token;
+
     public static final String EXTRA_SCANNER_ACTIVITY = "EXTRA_SCANNER_ACTIVITY";
 
     public Intent intent;
@@ -31,6 +33,9 @@ public class ScannerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
+
+        token = getIntent().getStringExtra(LoginActivity.EXTRA_TOKEN);
+
         bindUI();
 
         imageViewAnimation.setBackgroundResource(R.drawable.scanner_animation);

@@ -8,21 +8,30 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.maquetadoqr.DAOs.EventConfigDAO;
 import com.example.maquetadoqr.DAOs.UserLoginDAO;
+import com.example.maquetadoqr.POJOs.POJOEventConfig;
+import com.example.maquetadoqr.POJOs.POJOField;
+import com.example.maquetadoqr.POJOs.POJOForm;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {POJOUserLogin.class}, version = 1, exportSchema = false)
+@Database(entities = {
+            POJOUserLogin.class,
+            POJOEventConfig.class,
+            POJOForm.class,
+            POJOField.class}, version = 1, exportSchema = false)
 public abstract class QRRoomDatabase extends RoomDatabase {
     public abstract UserLoginDAO userLoginDAO();
+    public abstract EventConfigDAO eventConfigDAO();
 
     private static volatile QRRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static QRRoomDatabase getDatabase(final Context context) {
+    public static QRRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (QRRoomDatabase.class) {
                 if (INSTANCE == null) {
