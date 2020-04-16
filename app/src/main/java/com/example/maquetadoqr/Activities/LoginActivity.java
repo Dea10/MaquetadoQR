@@ -17,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.maquetadoqr.POJOs.POJOEventConfig;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
 import com.example.maquetadoqr.R;
 import com.example.maquetadoqr.UserLoginViewModel;
@@ -26,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,8 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     public EditText editTextPassword;
     public Button buttonLogin;
 
-    public String user;
-    public String password;
     public String token;
     public Integer userId;
     public String roleFlow;
@@ -49,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     public String companyName;
 
     public static final String TAG = LoginActivity.class.getName();
+    public static final String EXTRA_TOKEN = "EXTRA_TOKEN";
 
     public View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -76,22 +75,31 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(onClickListener);
     }
 
-    public void goToScannerActivity(String user, String password, String token) {
+    public void goToScannerActivity(String token) {
         Intent intent = new Intent(this, ScannerActivity.class);
+        intent.putExtra(EXTRA_TOKEN, token);
         startActivity(intent);
     }
 
     public void login() {
-        user = editTextUser.getText().toString();
-        password = editTextPassword.getText().toString();
+        String user = editTextUser.getText().toString();
+        String password = editTextPassword.getText().toString();
 
         String loginUrl = "http://11994.qa.rcontrol.com.mx/user/LoginQR";
         String resourcesUrl = "http://11994.qa.rcontrol.com.mx/japi/get_feature_configuration_by_user_and_category";
 
-        loginRequest(loginUrl);
+        loginRequest(user, password, loginUrl);
         configRequest(resourcesUrl);
+    }
 
-        //TODO: Mandar data a DB
+    public void showUserPasswordError() {
+        textViewFeedback.setTextColor(Color.RED);
+        textViewFeedback.setText("Usuario o Contraseña inconrrecta!");
+    }
+
+    public void showServerError() {
+        textViewFeedback.setTextColor(Color.RED);
+        textViewFeedback.setText("LoginRequest: Server Error");
     }
 
     private void configRequest(String resourcesUrl) {
@@ -101,10 +109,28 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
-                            ArrayList<JSONObject> jsonObjectArrayList = new ArrayList<>();
 
-                            // TODO: Recibir JSON y extraer data
-                        }catch (JSONException err){
+                            Log.d(TAG, "jsonArray.length(): " + jsonArray.length());
+
+                            for(int i = 0; i<jsonArray.length(); i++) {
+                                JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
+
+                                JSONObject checklist = (jsonObject.isNull("checklist") ? new JSONObject("{}") : jsonObject.getJSONObject("checklist"));
+                                JSONObject form = (jsonObject.isNull("form") ? new JSONObject("{}"): jsonObject.getJSONObject("form"));
+                                JSONArray journeyTravel = (jsonObject.isNull("journey_travel") ? new JSONArray("[{}]") : jsonObject.getJSONArray("journey_travel"));
+                                Boolean isAuthorized = (jsonObject.isNull("isauthorized") ? false : jsonObject.getBoolean("isauthorized"));
+                                Integer order = (jsonObject.isNull("order") ? 0 : jsonObject.getInt("order"));
+                                Integer featureId = (jsonObject.isNull("feature_id") ? 0 : jsonObject.getInt("feature_id"));
+                                String featureKey = (jsonObject.isNull("feature_key") ? "" : jsonObject.getString("feature_key"));
+                                String resourceName = (jsonObject.isNull("resource_name") ? "" : jsonObject.getString("resource_name"));
+
+                                // TODO: Send eventConfig to DB
+                                userLoginViewModel.insertEventConfig(new POJOEventConfig(featureId, order, featureKey, resourceName, isAuthorized));
+
+                                // TODO: Extract form data
+                                // TODO: Send form to DB
+                            }
+                        } catch (JSONException err) {
                             Log.e(TAG, err.getMessage());
                         }
                     }
@@ -115,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                 textViewFeedback.setText("ConfigRequest: Server Error");
                 Log.e(TAG, error.getMessage());
             }
-        }){
+        }) {
             @Override
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded";
@@ -142,42 +168,42 @@ public class LoginActivity extends AppCompatActivity {
         volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    //TODO: Separa lógica de login, mandar petición a DB a repositorio
-    public void loginRequest(String loginUrl) {
+    //TODO: Separar lógica de login, mandar petición a DB a repositorio
+    /*Intenté separar la lógica del login, pero al retornar un objeto tuve complicaciones con los métodos onResponse de Volley*/
+
+    public void loginRequest(String user, String password, String loginUrl) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            // TODO: Recibir JSON y extraer data
 
+                            // Extract data received from JSON
                             token = jsonObject.getString("token");
                             userId = jsonObject.getInt("user_id");
                             roleFlow = jsonObject.getString("role_flow");
                             userName = jsonObject.getString("user_name");
                             companyName = jsonObject.getString("company_name");
 
-                            // TODO: Mandar data a DB
+                            // Build and send data to Room DB
+                            userLoginViewModel.insertUserLogin(new POJOUserLogin(token, userId, roleFlow, userName, companyName));
 
-                            userLoginViewModel.insert(new POJOUserLogin(token, userId, roleFlow, userName, companyName));
-
-                            // goToScannerActivity(user, password, token);
-                        }catch (JSONException err){
-                            // Handle JSONException
-                            textViewFeedback.setTextColor(Color.RED);
-                            textViewFeedback.setText("Usuario o Contraseña inconrrecta!");
+                            // goToScannerActivity(token);
+                        } catch (JSONException err) {
+                            // User/Password error
+                            showUserPasswordError();
                             Log.e(TAG, err.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                textViewFeedback.setTextColor(Color.RED);
-                textViewFeedback.setText("LoginRequest: Server Error");
+                // Server error
+                showServerError();
                 Log.e(TAG, error.getMessage());
             }
-        }){
+        }) {
             @Override
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded";
@@ -194,8 +220,8 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 //Adding the parameters to the request
-                params.put("user", "admin_qa_rc");
-                params.put("password", "Password135$$");
+                params.put("user", "obuendiaz");
+                params.put("password", "Password135$");
 
                 return params;
             }
@@ -203,5 +229,4 @@ public class LoginActivity extends AppCompatActivity {
 
         volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
-
 }
