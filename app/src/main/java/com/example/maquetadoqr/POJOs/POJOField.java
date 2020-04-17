@@ -5,10 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "event_form_field",
-        foreignKeys = @ForeignKey(entity = POJOForm.class,
-        parentColumns = "form_id",
-        childColumns = "field_id"))
+@Entity(tableName = "event_form_field")
 public class POJOField {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "field_id")
@@ -20,6 +17,16 @@ public class POJOField {
     private String label;
     private String type;
     private Integer formId;
+
+    public POJOField(Boolean visible, Boolean readOnly, Boolean required, String name, String label, String type, Integer formId) {
+        this.visible = visible;
+        this.readOnly = readOnly;
+        this.required = required;
+        this.name = name;
+        this.label = label;
+        this.type = type;
+        this.formId = formId;
+    }
 
     public Integer getFieldId() {
         return fieldId;

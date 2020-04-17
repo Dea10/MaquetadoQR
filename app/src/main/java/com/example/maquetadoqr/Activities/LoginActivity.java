@@ -1,6 +1,8 @@
 package com.example.maquetadoqr.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -18,9 +20,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.maquetadoqr.POJOs.POJOEventConfig;
+import com.example.maquetadoqr.POJOs.POJOField;
+import com.example.maquetadoqr.POJOs.POJOForm;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
 import com.example.maquetadoqr.R;
-import com.example.maquetadoqr.UserLoginViewModel;
+import com.example.maquetadoqr.ViewModels.UserLoginViewModel;
 import com.example.maquetadoqr.Volley.VolleySingleton;
 
 import org.json.JSONArray;
@@ -112,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             Log.d(TAG, "jsonArray.length(): " + jsonArray.length());
 
-                            for(int i = 0; i<jsonArray.length(); i++) {
+                            for(int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
 
                                 JSONObject checklist = (jsonObject.isNull("checklist") ? new JSONObject("{}") : jsonObject.getJSONObject("checklist"));
@@ -120,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONArray journeyTravel = (jsonObject.isNull("journey_travel") ? new JSONArray("[{}]") : jsonObject.getJSONArray("journey_travel"));
                                 Boolean isAuthorized = (jsonObject.isNull("isauthorized") ? false : jsonObject.getBoolean("isauthorized"));
                                 Integer order = (jsonObject.isNull("order") ? 0 : jsonObject.getInt("order"));
-                                Integer featureId = (jsonObject.isNull("feature_id") ? 0 : jsonObject.getInt("feature_id"));
+                                Integer featureId = (jsonObject.isNull("feature_id") ? 0 : jsonObject.getInt("feature_id")); // event_id
                                 String featureKey = (jsonObject.isNull("feature_key") ? "" : jsonObject.getString("feature_key"));
                                 String resourceName = (jsonObject.isNull("resource_name") ? "" : jsonObject.getString("resource_name"));
 
@@ -128,7 +132,26 @@ public class LoginActivity extends AppCompatActivity {
                                 userLoginViewModel.insertEventConfig(new POJOEventConfig(featureId, order, featureKey, resourceName, isAuthorized));
 
                                 // TODO: Extract form data
-                                // TODO: Send form to DB
+                                if(!jsonObject.isNull("form")) {
+                                    JSONArray field = form.getJSONArray("field");
+                                    // maybe a good moment to send a form related to event
+                                    userLoginViewModel.insertForm(new POJOForm(featureId));
+                                    for(int j =0; j < field.length(); j++) {
+                                        JSONObject jsonField = new JSONObject(field.get(j).toString());
+
+                                        String name = (jsonField.isNull("name") ? "" : jsonField.getString("name"));
+                                        String label = (jsonField.isNull("label") ? "" : jsonField.getString("label"));
+                                        String type = (jsonField.isNull("type") ? "" : jsonField.getString("type"));
+                                        Boolean visible = (jsonField.isNull("visible") ? false : jsonField.getBoolean("visible"));
+                                        Boolean readOnly = (jsonField.isNull("readOnly") ? false : jsonField.getBoolean("readOnly"));
+                                        Boolean required = (jsonField.isNull("required") ? false : jsonField.getBoolean("required"));
+
+                                        // TODO: Send form to DB in a FieldObject relating to a Form
+                                        // send field related to form
+                                        Integer lastFormId = userLoginViewModel.getLastFormId();
+                                        userLoginViewModel.insertField(new POJOField(visible, readOnly, required, name, label, type, lastFormId));
+                                    }
+                                }
                             }
                         } catch (JSONException err) {
                             Log.e(TAG, err.getMessage());

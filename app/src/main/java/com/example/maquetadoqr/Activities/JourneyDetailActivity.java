@@ -49,6 +49,3 @@ public class JourneyDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-
-// TODO: Send buttons
-// TODO: Cancel buttons

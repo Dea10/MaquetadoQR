@@ -1,4 +1,4 @@
-package com.example.maquetadoqr;
+package com.example.maquetadoqr.Databases;
 
 import android.content.Context;
 
@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.maquetadoqr.DAOs.EventConfigDAO;
+import com.example.maquetadoqr.DAOs.FieldDAO;
+import com.example.maquetadoqr.DAOs.FormDAO;
 import com.example.maquetadoqr.DAOs.UserLoginDAO;
 import com.example.maquetadoqr.POJOs.POJOEventConfig;
 import com.example.maquetadoqr.POJOs.POJOField;
@@ -26,6 +28,8 @@ import java.util.concurrent.Executors;
 public abstract class QRRoomDatabase extends RoomDatabase {
     public abstract UserLoginDAO userLoginDAO();
     public abstract EventConfigDAO eventConfigDAO();
+    public abstract FormDAO formDAO();
+    public abstract FieldDAO fieldDAO();
 
     private static volatile QRRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -38,6 +42,7 @@ public abstract class QRRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             QRRoomDatabase.class, "qr_database")
                             .addCallback(sRoomDatabaseCallback)
+                            .allowMainThreadQueries()
                             .build();
                 }
             }
