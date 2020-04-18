@@ -24,6 +24,12 @@ import com.example.maquetadoqr.POJOs.POJOField;
 import com.example.maquetadoqr.POJOs.POJOForm;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
 import com.example.maquetadoqr.R;
+import com.example.maquetadoqr.StaticClasses.SCChecklist;
+import com.example.maquetadoqr.StaticClasses.SCEvent;
+import com.example.maquetadoqr.StaticClasses.SCEventConfig;
+import com.example.maquetadoqr.StaticClasses.SCField;
+import com.example.maquetadoqr.StaticClasses.SCForm;
+import com.example.maquetadoqr.StaticClasses.SCJourneyTravel;
 import com.example.maquetadoqr.ViewModels.UserLoginViewModel;
 import com.example.maquetadoqr.Volley.VolleySingleton;
 
@@ -128,14 +134,10 @@ public class LoginActivity extends AppCompatActivity {
                                 String featureKey = (jsonObject.isNull("feature_key") ? "" : jsonObject.getString("feature_key"));
                                 String resourceName = (jsonObject.isNull("resource_name") ? "" : jsonObject.getString("resource_name"));
 
-                                // TODO: Send eventConfig to DB
-                                userLoginViewModel.insertEventConfig(new POJOEventConfig(featureId, order, featureKey, resourceName, isAuthorized));
-
-                                // TODO: Extract form data
                                 if(!jsonObject.isNull("form")) {
                                     JSONArray field = form.getJSONArray("field");
-                                    // maybe a good moment to send a form related to event
-                                    userLoginViewModel.insertForm(new POJOForm(featureId));
+                                    SCForm scForm = new SCForm();
+
                                     for(int j =0; j < field.length(); j++) {
                                         JSONObject jsonField = new JSONObject(field.get(j).toString());
 
@@ -146,11 +148,13 @@ public class LoginActivity extends AppCompatActivity {
                                         Boolean readOnly = (jsonField.isNull("readOnly") ? false : jsonField.getBoolean("readOnly"));
                                         Boolean required = (jsonField.isNull("required") ? false : jsonField.getBoolean("required"));
 
-                                        // TODO: Send form to DB in a FieldObject relating to a Form
-                                        // send field related to form
-                                        Integer lastFormId = userLoginViewModel.getLastFormId();
-                                        userLoginViewModel.insertField(new POJOField(visible, readOnly, required, name, label, type, lastFormId));
+
+                                        scForm.addField(new SCField(visible, readOnly, required, name, label, type));
                                     }
+                                    SCEvent scEvent = new SCEvent(featureId, order, featureKey, resourceName, isAuthorized, scForm, new SCChecklist(), new SCJourneyTravel());
+                                    SCEventConfig scEventConfig = SCEventConfig.getInstance();
+                                    scEventConfig.addEvent(scEvent);
+                                    Log.d(TAG, "******************");
                                 }
                             }
                         } catch (JSONException err) {
