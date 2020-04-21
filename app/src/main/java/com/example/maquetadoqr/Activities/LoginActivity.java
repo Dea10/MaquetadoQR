@@ -1,8 +1,6 @@
 package com.example.maquetadoqr.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -19,9 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.maquetadoqr.POJOs.POJOEventConfig;
-import com.example.maquetadoqr.POJOs.POJOField;
-import com.example.maquetadoqr.POJOs.POJOForm;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
 import com.example.maquetadoqr.R;
 import com.example.maquetadoqr.StaticClasses.SCChecklist;
@@ -30,7 +25,7 @@ import com.example.maquetadoqr.StaticClasses.SCEventConfig;
 import com.example.maquetadoqr.StaticClasses.SCField;
 import com.example.maquetadoqr.StaticClasses.SCForm;
 import com.example.maquetadoqr.StaticClasses.SCJourneyTravel;
-import com.example.maquetadoqr.ViewModels.UserLoginViewModel;
+import com.example.maquetadoqr.ViewModels.DataViewModel;
 import com.example.maquetadoqr.Volley.VolleySingleton;
 
 import org.json.JSONArray;
@@ -43,7 +38,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     public VolleySingleton volleySingleton;
-    public UserLoginViewModel userLoginViewModel;
+    public DataViewModel dataViewModel;
 
     public TextView textViewFeedback;
     public EditText editTextUser;
@@ -71,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userLoginViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(UserLoginViewModel.class);
+        dataViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(DataViewModel.class);
 
         bindUI();
     }
@@ -148,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
                                         Boolean readOnly = (jsonField.isNull("readOnly") ? false : jsonField.getBoolean("readOnly"));
                                         Boolean required = (jsonField.isNull("required") ? false : jsonField.getBoolean("required"));
 
-
                                         scForm.addField(new SCField(visible, readOnly, required, name, label, type));
                                     }
                                     SCEvent scEvent = new SCEvent(featureId, order, featureKey, resourceName, isAuthorized, scForm, new SCChecklist(), new SCJourneyTravel());
@@ -214,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
                             companyName = jsonObject.getString("company_name");
 
                             // Build and send data to Room DB
-                            userLoginViewModel.insertUserLogin(new POJOUserLogin(token, userId, roleFlow, userName, companyName));
+                            dataViewModel.insertUserLogin(new POJOUserLogin(token, userId, roleFlow, userName, companyName));
 
                             // goToScannerActivity(token);
                         } catch (JSONException err) {

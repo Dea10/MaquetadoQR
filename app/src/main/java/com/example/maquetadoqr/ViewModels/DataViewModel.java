@@ -4,21 +4,20 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.maquetadoqr.POJOs.POJOEventConfig;
 import com.example.maquetadoqr.POJOs.POJOField;
 import com.example.maquetadoqr.POJOs.POJOForm;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
-import com.example.maquetadoqr.Repositories.UserLoginRepository;
+import com.example.maquetadoqr.Repositories.DataRepository;
 
-public class UserLoginViewModel extends AndroidViewModel {
-    private UserLoginRepository mRepository;
+public class DataViewModel extends AndroidViewModel {
+    private DataRepository mRepository;
 
-    public UserLoginViewModel(@NonNull Application application) {
+    public DataViewModel(@NonNull Application application) {
         super(application);
 
-        mRepository = new UserLoginRepository(application);
+        mRepository = new DataRepository(application);
     }
 
     public void insertUserLogin(POJOUserLogin userLogin) {

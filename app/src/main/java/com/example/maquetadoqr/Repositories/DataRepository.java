@@ -14,13 +14,13 @@ import com.example.maquetadoqr.POJOs.POJOField;
 import com.example.maquetadoqr.POJOs.POJOForm;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
 
-public class UserLoginRepository {
+public class DataRepository {
     private UserLoginDAO userLoginDAO;
     private EventConfigDAO eventConfigDAO;
     private FormDAO formDAO;
     private FieldDAO fieldDAO;
 
-    public UserLoginRepository(Application application) {
+    public DataRepository(Application application) {
         QRRoomDatabase db = QRRoomDatabase.getDatabase(application);
         userLoginDAO = db.userLoginDAO();
         eventConfigDAO = db.eventConfigDAO();

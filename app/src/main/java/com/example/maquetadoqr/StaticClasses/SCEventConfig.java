@@ -1,7 +1,6 @@
 package com.example.maquetadoqr.StaticClasses;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SCEventConfig {
     private ArrayList<SCEvent> events = new ArrayList<>();
