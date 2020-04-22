@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -17,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.maquetadoqr.POJOs.POJOUserLogin;
 import com.example.maquetadoqr.R;
 import com.example.maquetadoqr.Utils.SCChecklist;
 import com.example.maquetadoqr.Utils.SCEvent;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     public EditText editTextUser;
     public EditText editTextPassword;
     public Button buttonLogin;
+    public ProgressBar progressBar;
 
     public static final String TAG = LoginActivity.class.getName();
 
@@ -71,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextUser = findViewById(R.id.editTextUser);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
+        progressBar = findViewById(R.id.mainProgressBar);
 
         buttonLogin.setOnClickListener(onClickListener);
     }
@@ -84,14 +87,22 @@ public class LoginActivity extends AppCompatActivity {
         String user = editTextUser.getText().toString();
         String password = editTextPassword.getText().toString();
 
+        progressBar.setVisibility(View.VISIBLE);
+
         loginRequest(user, password);
         configRequest();
 
         SCUserLogin userLogin = SCUserLogin.getInstance();
 
-        if(userLogin.getUserId() != 0) {
-            goToScannerActivity();
-        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(userLogin.getUserId() != 0) {
+                    goToScannerActivity();
+                }
+            }
+        }, 1500);
     }
 
     public void showUserPasswordError() {
@@ -104,7 +115,8 @@ public class LoginActivity extends AppCompatActivity {
         textViewFeedback.setText("LoginRequest: Server Error");
     }
 
-    private void configRequest() {
+
+    public void configRequest() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.RESOURCES_URL,
                 new Response.Listener<String>() {
                     @Override
