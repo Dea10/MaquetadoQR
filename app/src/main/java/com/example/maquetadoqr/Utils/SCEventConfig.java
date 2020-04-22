@@ -1,4 +1,4 @@
-package com.example.maquetadoqr.StaticClasses;
+package com.example.maquetadoqr.Utils;
 
 import java.util.ArrayList;
 

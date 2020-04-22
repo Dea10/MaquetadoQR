@@ -19,12 +19,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.maquetadoqr.POJOs.POJOUserLogin;
 import com.example.maquetadoqr.R;
-import com.example.maquetadoqr.StaticClasses.SCChecklist;
-import com.example.maquetadoqr.StaticClasses.SCEvent;
-import com.example.maquetadoqr.StaticClasses.SCEventConfig;
-import com.example.maquetadoqr.StaticClasses.SCField;
-import com.example.maquetadoqr.StaticClasses.SCForm;
-import com.example.maquetadoqr.StaticClasses.SCJourneyTravel;
+import com.example.maquetadoqr.Utils.SCChecklist;
+import com.example.maquetadoqr.Utils.SCEvent;
+import com.example.maquetadoqr.Utils.SCEventConfig;
+import com.example.maquetadoqr.Utils.SCField;
+import com.example.maquetadoqr.Utils.SCForm;
+import com.example.maquetadoqr.Utils.SCJourneyTravel;
+import com.example.maquetadoqr.Utils.SCUserLogin;
+import com.example.maquetadoqr.Utils.URLs;
 import com.example.maquetadoqr.ViewModels.DataViewModel;
 import com.example.maquetadoqr.Volley.VolleySingleton;
 
@@ -45,14 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     public EditText editTextPassword;
     public Button buttonLogin;
 
-    public String token;
-    public Integer userId;
-    public String roleFlow;
-    public String userName;
-    public String companyName;
-
     public static final String TAG = LoginActivity.class.getName();
-    public static final String EXTRA_TOKEN = "EXTRA_TOKEN";
 
     public View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -80,9 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(onClickListener);
     }
 
-    public void goToScannerActivity(String token) {
+    public void goToScannerActivity() {
         Intent intent = new Intent(this, ScannerActivity.class);
-        intent.putExtra(EXTRA_TOKEN, token);
         startActivity(intent);
     }
 
@@ -90,11 +84,14 @@ public class LoginActivity extends AppCompatActivity {
         String user = editTextUser.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        String loginUrl = "http://11994.qa.rcontrol.com.mx/user/LoginQR";
-        String resourcesUrl = "http://11994.qa.rcontrol.com.mx/japi/get_feature_configuration_by_user_and_category";
+        loginRequest(user, password);
+        configRequest();
 
-        loginRequest(user, password, loginUrl);
-        configRequest(resourcesUrl);
+        SCUserLogin userLogin = SCUserLogin.getInstance();
+
+        if(userLogin.getUserId() != 0) {
+            goToScannerActivity();
+        }
     }
 
     public void showUserPasswordError() {
@@ -107,8 +104,8 @@ public class LoginActivity extends AppCompatActivity {
         textViewFeedback.setText("LoginRequest: Server Error");
     }
 
-    private void configRequest(String resourcesUrl) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, resourcesUrl,
+    private void configRequest() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.RESOURCES_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -189,28 +186,23 @@ public class LoginActivity extends AppCompatActivity {
         volleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    //TODO: Separar lógica de login, mandar petición a DB a repositorio
-    /*Intenté separar la lógica del login, pero al retornar un objeto tuve complicaciones con los métodos onResponse de Volley*/
-
-    public void loginRequest(String user, String password, String loginUrl) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
+    public void loginRequest(String user, String password) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGIN_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
+                            SCUserLogin userLogin = SCUserLogin.getInstance();
+
                             // Extract data received from JSON
-                            token = jsonObject.getString("token");
-                            userId = jsonObject.getInt("user_id");
-                            roleFlow = jsonObject.getString("role_flow");
-                            userName = jsonObject.getString("user_name");
-                            companyName = jsonObject.getString("company_name");
+                            userLogin.setToken(jsonObject.getString("token"));
+                            userLogin.setUserId(jsonObject.getInt("user_id"));
+                            userLogin.setRoleFlow(jsonObject.getString("role_flow"));
+                            userLogin.setUserName(jsonObject.getString("user_name"));
+                            userLogin.setCompanyName(jsonObject.getString("company_name"));
 
-                            // Build and send data to Room DB
-                            dataViewModel.insertUserLogin(new POJOUserLogin(token, userId, roleFlow, userName, companyName));
-
-                            // goToScannerActivity(token);
                         } catch (JSONException err) {
                             // User/Password error
                             showUserPasswordError();

@@ -1,6 +1,4 @@
-package com.example.maquetadoqr.StaticClasses;
-
-import java.util.List;
+package com.example.maquetadoqr.Utils;
 
 public class SCEvent {
     private Integer featureId;

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maquetadoqr.R;
+import com.example.maquetadoqr.Utils.URLs;
 import com.squareup.picasso.Picasso;
 
 public class ScannerActivity extends AppCompatActivity {
@@ -22,8 +23,6 @@ public class ScannerActivity extends AppCompatActivity {
     public TextView textViewCompanyName;
     public TextView textViewCounter;
 
-    private String token;
-
     public static final String EXTRA_SCANNER_ACTIVITY = "EXTRA_SCANNER_ACTIVITY";
 
     public Intent intent;
@@ -33,8 +32,6 @@ public class ScannerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
-
-        token = getIntent().getStringExtra(LoginActivity.EXTRA_TOKEN);
 
         bindUI();
 
@@ -70,8 +67,7 @@ public class ScannerActivity extends AppCompatActivity {
     }
 
     public void setView() {
-        String company_logo = "https://rcontrol.com.mx/wp-content/uploads/2016/03/LOGO-RC-OK.png";
-        Picasso.get().load(company_logo).into(imageViewLogo);
+        Picasso.get().load(URLs.RC_LOGO).into(imageViewLogo);
     }
 
     public void goToJourneyDetailActivity(View view) {
