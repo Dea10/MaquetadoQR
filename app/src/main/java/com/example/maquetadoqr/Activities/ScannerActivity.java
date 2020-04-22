@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maquetadoqr.R;
+import com.example.maquetadoqr.Utils.SCUserLogin;
 import com.example.maquetadoqr.Utils.URLs;
 import com.squareup.picasso.Picasso;
 
