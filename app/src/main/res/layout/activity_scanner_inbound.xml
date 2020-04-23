@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ScannerActivityInbound">
+
+<ImageView
+    android:id="@+id/scannerInboundImageViewHeader"
+    android:layout_width="415dp"
+    android:layout_height="64dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/header" />
+
+<ImageView
+    android:id="@+id/scannerInboundImageViewLogo"
+    android:layout_width="wrap_content"
+    android:layout_height="75dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerInboundImageViewHeader" />
+
+<TextView
+    android:id="@+id/scannerInboundTextViewCompanyName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:text="Recurso Confiable S.A. de C.V."
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerInboundImageViewLogo" />
+
+<ImageView
+    android:id="@+id/scannerInboundImageViewAnimation"
+    android:layout_width="0dp"
+    android:layout_height="300dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerInboundTextViewCompanyName" />
+
+<TextView
+    android:id="@+id/scannerInboundTextViewCounter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:text="El scanner se reiniciará en: -1"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerInboundImageViewAnimation" />
+
+    <Button
+        android:id="@+id/scannerInboundButtonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF5722"
+        android:onClick="logout"
+        android:text="Cerrar sesión"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/scannerInboundTextViewCounter"
+        app:layout_constraintStart_toStartOf="@+id/scannerInboundTextViewCounter"
+        app:layout_constraintTop_toBottomOf="@+id/scannerInboundTextViewCounter" />
+
+    <TextView
+        android:id="@+id/scannerInboundTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="INBOUND"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

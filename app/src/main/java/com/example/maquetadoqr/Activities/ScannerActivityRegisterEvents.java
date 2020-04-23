@@ -11,11 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maquetadoqr.R;
-import com.example.maquetadoqr.Utils.SCUserLogin;
 import com.example.maquetadoqr.Utils.URLs;
 import com.squareup.picasso.Picasso;
 
-public class ScannerActivity extends AppCompatActivity {
+public class ScannerActivityRegisterEvents extends AppCompatActivity {
 
     public AnimationDrawable scannerAnimation;
     public ImageView imageViewHeader;
@@ -32,7 +31,7 @@ public class ScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scanner);
+        setContentView(R.layout.activity_scanner_register_events);
 
         bindUI();
 

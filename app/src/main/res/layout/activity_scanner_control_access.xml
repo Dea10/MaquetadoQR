@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ScannerActivityControlAccess">
+
+<ImageView
+    android:id="@+id/scannerControlAccessImageViewHeader"
+    android:layout_width="415dp"
+    android:layout_height="64dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/header" />
+
+<ImageView
+    android:id="@+id/scannerControlAccessImageViewLogo"
+    android:layout_width="wrap_content"
+    android:layout_height="75dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerControlAccessImageViewHeader" />
+
+<TextView
+    android:id="@+id/scannerControlAccessTextViewCompanyName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:text="Recurso Confiable S.A. de C.V."
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerControlAccessImageViewLogo" />
+
+<ImageView
+    android:id="@+id/scannerControlAccessImageViewAnimation"
+    android:layout_width="0dp"
+    android:layout_height="300dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerControlAccessTextViewCompanyName" />
+
+<TextView
+    android:id="@+id/scannerControlAccessTextViewCounter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:text="El scanner se reiniciará en: -1"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/scannerControlAccessImageViewAnimation" />
+
+<Button
+    android:id="@+id/scannerControlAccessButtonLogout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:backgroundTint="#FF5722"
+    android:onClick="logout"
+    android:text="Cerrar sesión"
+    android:textColor="#FFFFFF"
+    app:layout_constraintEnd_toEndOf="@+id/scannerControlAccessTextViewCounter"
+    app:layout_constraintStart_toStartOf="@+id/scannerControlAccessTextViewCounter"
+    app:layout_constraintTop_toBottomOf="@+id/scannerControlAccessTextViewCounter" />
+
+<TextView
+    android:id="@+id/scannerControlAccessTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:text="CONTROL_ACCESS"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

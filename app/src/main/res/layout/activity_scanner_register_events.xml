@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ScannerActivity">
+    tools:context=".Activities.ScannerActivityRegisterEvents">
 
     <ImageView
         android:id="@+id/scannerImageViewHeader"
@@ -67,7 +67,7 @@
         android:id="@+id/scannerButtonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#FF5722"
         android:onClick="logout"
         android:text="Cerrar sesión"
@@ -80,7 +80,7 @@
         android:id="@+id/buttonJourneyDetailActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:onClick="goToJourneyDetailActivity"
         android:text="JD"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,7 @@
         android:id="@+id/buttonAssignActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:onClick="goToAssignActivity"
         android:text="Assign"
         app:layout_constraintEnd_toStartOf="@+id/buttonAlertActivity"
@@ -104,12 +104,22 @@
         android:id="@+id/buttonAlertActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:onClick="goToAlertActivity"
         android:text="Alert"
         app:layout_constraintEnd_toStartOf="@+id/buttonJourneyDetailActivity"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonAssignActivity"
         app:layout_constraintTop_toBottomOf="@+id/scannerTextViewCounter" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="REGISTER_EVENTS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

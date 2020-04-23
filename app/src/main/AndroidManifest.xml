@@ -12,12 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ChecklistActivity"></activity>
+        <activity android:name=".Activities.ScannerActivityControlAccess"></activity>
+        <activity android:name=".Activities.ScannerActivityInbound" />
+        <activity android:name=".Activities.ChecklistActivity" />
         <activity android:name=".Activities.JourneyDetailActivity" />
         <activity android:name=".Activities.AlertActivity" />
         <activity android:name=".Activities.AssignActivity" />
         <activity android:name=".Activities.EventFormActivity" />
-        <activity android:name=".Activities.ScannerActivity" />
+        <activity android:name=".Activities.ScannerActivityRegisterEvents" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
