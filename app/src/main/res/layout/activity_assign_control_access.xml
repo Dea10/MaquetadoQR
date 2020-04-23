@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AssignActivityControlAccess">
+
+<ImageView
+    android:id="@+id/assginControlAccessImageViewHeader"
+    android:layout_width="412dp"
+    android:layout_height="64dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/header" />
+
+<TextView
+    android:id="@+id/assignControlAccessTextViewCredential"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="Credencial"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/assginControlAccessImageViewHeader" />
+
+<EditText
+    android:id="@+id/assignControlAccessEditTextCredential"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:ems="10"
+    android:hint="Credencial"
+    android:inputType="textPersonName"
+    app:layout_constraintEnd_toEndOf="@+id/assignControlAccessTextViewCredential"
+    app:layout_constraintStart_toStartOf="@+id/assignControlAccessTextViewCredential"
+    app:layout_constraintTop_toBottomOf="@+id/assignControlAccessTextViewCredential" />
+
+<EditText
+    android:id="@+id/assignControlAccessEditTextFullName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:ems="10"
+    android:hint="Nombre completo"
+    android:inputType="textPersonName"
+    app:layout_constraintEnd_toEndOf="@+id/assignControlAccessTextViewAuthorization"
+    app:layout_constraintStart_toStartOf="@+id/assignControlAccessTextViewAuthorization"
+    app:layout_constraintTop_toBottomOf="@+id/assignControlAccessTextViewAuthorization" />
+
+<EditText
+    android:id="@+id/assignControlAccessEditTextTransLine"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:ems="10"
+    android:hint="Línea de Transporte"
+    android:inputType="textPersonName"
+    app:layout_constraintEnd_toEndOf="@+id/assignControlAccessEditTextFullName"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/assignControlAccessEditTextFullName"
+    app:layout_constraintTop_toBottomOf="@+id/assignControlAccessEditTextFullName" />
+
+<Button
+    android:id="@+id/assignControlAccessButtonSend"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="32dp"
+    android:backgroundTint="#FF5722"
+    android:text="Confirmar"
+    android:textColor="#FFFFFF"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/assignControlAccessButtonCancel"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent" />
+
+<Button
+    android:id="@+id/assignControlAccessButtonCancel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="32dp"
+    android:backgroundTint="#FF5722"
+    android:text="Cancelar"
+    android:textColor="#FFFFFF"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toEndOf="@+id/assignControlAccessButtonSend" />
+
+<View
+    android:id="@+id/assignControlAccessDivider"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="32dp"
+    android:layout_marginEnd="8dp"
+    android:background="?android:attr/listDivider"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/assignControlAccessEditTextCredential" />
+
+<TextView
+    android:id="@+id/assignControlAccessTextViewAuthorization"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:text="Autorización"
+    app:layout_constraintEnd_toEndOf="@+id/assignControlAccessDivider"
+    app:layout_constraintStart_toStartOf="@+id/assignControlAccessDivider"
+    app:layout_constraintTop_toBottomOf="@+id/assignControlAccessDivider" />
+
+    <Button
+        android:id="@+id/assignControlAccessButtonGet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="getDriverInfo"
+        android:text="get driver"
+        app:layout_constraintEnd_toEndOf="@+id/assignControlAccessEditTextTransLine"
+        app:layout_constraintStart_toStartOf="@+id/assignControlAccessEditTextTransLine"
+        app:layout_constraintTop_toBottomOf="@+id/assignControlAccessEditTextTransLine" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
