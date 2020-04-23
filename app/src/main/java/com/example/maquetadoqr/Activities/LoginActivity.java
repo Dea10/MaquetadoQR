@@ -78,8 +78,18 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(onClickListener);
     }
 
-    public void goToScannerActivity() {
-        Intent intent = new Intent(this, ScannerActivity.class);
+    public void goToScannerActivityRegisterEvents() {
+        Intent intent = new Intent(this, ScannerActivityRegisterEvents.class);
+        startActivity(intent);
+    }
+
+    public void goToScannerActivityInbound() {
+        Intent intent = new Intent(this, ScannerActivityInbound.class);
+        startActivity(intent);
+    }
+
+    public void goToScannerActivityControlAccess() {
+        Intent intent = new Intent(this, ScannerActivityControlAccess.class);
         startActivity(intent);
     }
 
@@ -99,7 +109,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(userLogin.getUserId() != 0) {
-                    goToScannerActivity();
+                    switch (userLogin.getRoleFlow()) {
+                        case "CONTROL_ACCESS":
+                            goToScannerActivityControlAccess();
+                            break;
+                        case "REGISTER_EVENTS":
+                            goToScannerActivityRegisterEvents();
+                            break;
+                        default:
+                            goToScannerActivityInbound();
+                    }
                 }
             }
         }, 1500);
@@ -245,8 +264,8 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 //Adding the parameters to the request
-                params.put("user", "obuendiaz");
-                params.put("password", "Password135$");
+                params.put("user", user);
+                params.put("password", password);
 
                 return params;
             }

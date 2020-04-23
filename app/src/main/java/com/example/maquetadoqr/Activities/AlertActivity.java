@@ -30,7 +30,7 @@ public class AlertActivity extends AppCompatActivity {
     }
 
     public void buttonContinueFunction(View view) {
-        Intent intent = new Intent(this, ScannerActivity.class);
+        Intent intent = new Intent(this, ScannerActivityRegisterEvents.class);
         startActivity(intent);
     }
 }
