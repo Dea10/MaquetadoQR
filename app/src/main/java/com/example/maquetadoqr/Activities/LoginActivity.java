@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToScannerActivityControlAccess() {
-        Intent intent = new Intent(this, ScannerActivityControlAccess.class);
+    public void goToAssignActivityControlAccess() {
+        Intent intent = new Intent(this, AssignActivityControlAccess.class);
         startActivity(intent);
     }
 
@@ -109,9 +109,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(userLogin.getUserId() != 0) {
-                    switch (userLogin.getRoleFlow()) {
+                    //switch (userLogin.getRoleFlow()) {
+                    switch ("CONTROL_ACCESS") {
                         case "CONTROL_ACCESS":
-                            goToScannerActivityControlAccess();
+                            goToAssignActivityControlAccess();
                             break;
                         case "REGISTER_EVENTS":
                             goToScannerActivityRegisterEvents();
@@ -176,7 +177,6 @@ public class LoginActivity extends AppCompatActivity {
                                     SCEvent scEvent = new SCEvent(featureId, order, featureKey, resourceName, isAuthorized, scForm, new SCChecklist(), new SCJourneyTravel());
                                     SCEventConfig scEventConfig = SCEventConfig.getInstance();
                                     scEventConfig.addEvent(scEvent);
-                                    Log.d(TAG, "******************");
                                 }
                             }
                         } catch (JSONException err) {
